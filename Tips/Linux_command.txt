@@ -1,0 +1,67 @@
+Command         概要
+-----------------------------------------------------------------------------------------------
+pwd                                               表示：現在いるディレクトリ(カレントディレクトリ)
+ls -altr                                          表示：リスト形式(l)で隠しファイルを含めて(a)時系列(t)逆順(r)で表示
+history                                           表示：コマンド実行履歴
+ifconfig -a                                       表示：IPアドレス等
+date                                              表示：現在の日時
+cal                                               表示：カレンダー
+top                                               表示：実行中のプロセスをリアルタイムで表示
+env                                               表示：環境変数
+df -h                                             表示：ディスク使用量・空き容量
+du -s [directory]                                 表示：[directory]のディスク使用量
+w                                                 表示：サーバ状態の簡易表示（ログインユーザ、稼働時間等）
+ps -aux                                           表示：現在実行されているプロセスの情報
+diff [fileA] [fileB]                              表示：[fileA]と[fileB]の比較結果
+diff -r [directoryA] [directoryB]                 表示：[directoryA]と[directoryB]を再帰的にファイル比較
+sdiff [fileA] [fileB]                             表示：[fileA]と[fileB]を左右に並べて比較した結果
+find [directory] -print -name "[正規表現]"        表示：[directory]配下から[正規表現]に一致するファイルの検索結果
+sudo [command]                                    実行：[command]を管理者権限で実行
+which [command]                                   表示：[command]の位置
+cat [file]                                        表示：[file]の全内容
+less [file]                                       表示：[file]の内容を一画面ずつ表示
+more [file]                                       表示：[file]の内容を一画面ずつ表示
+head -n 5 [file]                                  表示：[file]の先頭5行
+tail -n 5 [file]                                  表示：[file]の末端5行
+grep [正規表現] [file]                            表示：[file]の正規表現を含む行
+sed "s/aaa/bbb/g" [file]                          表示：[file]の文字列aaaをbbbに変換した結果
+awk -F ',' '{print $2}' [file]                    表示：[file]の各行を','で区切った2列目
+sort [file]                                       表示：[file]を行単位でソートした結果
+uniq [file]                                       表示：[file]で連続する同じ内容の行をまとめた結果
+wc [file]                                         表示：行数、単語数、文字数
+[command] > [file]                                [command]で表示される結果を[File]に書き込み
+[command1] ｜ xargs [command2]                   ｜は半角、[command1]の出力行を[command2]の引数として実行
+man [command]                                     確認：コマンドのマニュアル（スクロール可能、qで終了）
+less [file]                                       確認：[file]の中身（スクロール可能、qで終了）
+cd [directory]                                    移動：[directory]に移動、cdのみホームディレクトリ、cd .. 一つ上のディレクトリ
+vi [file]                                         編集：[file]を編集
+view [file]                                       表示：[file]を読み取り専用で開く（編集することも可能）
+ssh [host]                                        通信：[host]に接続
+ssh [user]@[host]                                 通信：[user]で[host]に接続
+ssh [host] [command]                              通信：[host]で[command]を実行
+scp [file1] [host2]:[path2]                       通信：[file1]を[host2]の[path2]にコピー
+scp [host1]:[file1] [path2]                       通信：[host1]の[file1]を[path2]にコピー
+exit                                              通信：接続終了
+mkdir [directory]                                 作成：[directory]を作成
+touch [new_file]                                  作成：0バイトの[new_file]
+ln -s [file] [link]                               作成：[file]のシンボリックリンク[link]を作成
+rm [file]                                         削除：[file]を削除
+rm -rf [directory]                                削除：[directory]の中身を再帰的に削除
+unlink [link]                                     削除：[link]の削除
+cp [file] [new_file]                              複製：[file]のコピー[new_file]を作成
+cp -p [file] [new_file]                           複製：タイムスタンプ等を保持してコピー
+cp -r [directory] [new_directory]                 複製：[directory]の中身を再帰的に[new_directory]にコピー
+mv [file] [directory]                             変更：[file]を[directory]に移動
+mv [file] [new_file]                              変更：[file]のファイル名を[new_file]に変更
+chmod 775 [file]                                  変更：[file]の許可権を775に変更
+chown [user]:[group] [file]                       変更：[file]のユーザを[user]グループを[group]に変更
+wget [url]                                        取得：[url]のファイルを取得
+tar -xzvf hoge.tar.gz                             解凍：hoge.tar.gzを解凍
+configure -prefix=[path]                          作成：[path]にインストールするように指定してMakefileを作成
+make                                              作成：Makefileの内容に従い実行ファイルを作成
+make install                                      複製：Makefileの内容に従い作成した実行ファイルをインストール
+gcc                                               コンパイラ：C言語
+g++                                               コンパイラ：C++
+javac                                             コンパイラ：Java
+java [package].[class]                            実行：[package].[class]のmain関数を実行
+python                                            パイソン実行
