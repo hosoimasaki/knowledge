@@ -1,0 +1,133 @@
+####################################################################################
+#【EC2】
+# docker,docker-composeでサービスを早期に立ち上げる。
+####################################################################################
+# dokcerインストール
+# 以下コマンドを実行します。
+
+sudo yum install -y docker          # dockerのインストール
+sudo service docker start           # dockerの起動
+sudo usermod -a -G docker ec2-user  # ec2-userをdockerグループに入れる。これでec2-userがdockerコマンドを実行できる
+sudo docker info                    # dockerの起動確認
+
+####################################################################################
+# docker-composeインストール
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
+
+####################################################################################
+# ポートフォワード
+# 例）8888:80の場合
+#     ホストの8888ポートへアクセスすると、コンテナの80ポートへフォワードされる。
+#     ホスト側のポート番号は空いていれば使用可能。
+
+####################################################################################
+# dockerコマンド
+
+####################################################################################
+# nginx
+docker run -d -p 8888:80 nginx
+
+####################################################################################
+# gitbucket
+docker run -d -p 8080:8080 gitbucket/gitbucket
+
+####################################################################################
+# mattermost
+docker run --name mattermost-preview -d -v data:/mm/mattermost/mattermost-data -v dbdata:/var/lib/mysql -p 8065:8065 mattermost/mattermost-preview
+
+
+####################################################################################
+# docker-composeコマンド
+
+####################################################################################
+# redmine
+mkdir redmine
+cd redmine
+vim docker-compose.yml
+
+version: '3.3'
+services:
+  redmine:
+    image: redmine
+    container_name: redmine
+    ports:
+      - 3000:3000
+    volumes:
+      - ./data/plugins:/usr/src/redmine/plugins
+      - ./data/themes:/usr/src/redmine/public/themes
+    environment:
+      REDMINE_DB_MYSQL: redmine-db
+      REDMINE_DB_PASSWORD: redmine
+    depends_on:
+      - redmine-db
+    restart: always
+
+  redmine-db:
+    image: mariadb
+    container_name: redmine-db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: redmine
+      MYSQL_DATABASE: redmine
+    volumes:
+      - ./data/db:/var/lib/mysql
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    restart: always
+
+
+# 起動(docker-compose.ymlと同一階層で実施)
+# docker-compose up -d
+
+# 停止(docker-compose.ymlと同一階層で実施)
+# docker-compose down
+
+
+####################################################################################
+# wordpress
+mkdir wordpress
+cd wordpress
+vim docker-compose.yml
+
+version: '3'
+
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: somewordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     ports:
+       - "9000:80"
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+volumes:
+    db_data:
+
+# 起動(docker-compose.ymlと同一階層で実施)
+# docker-compose up -d
+
+# 停止(docker-compose.ymlと同一階層で実施)
+# docker-compose down
+
+
+####################################################################################
+# Dockerコマンド参考サイト
+# https://www.itbook.info/network/docker05.html
+
