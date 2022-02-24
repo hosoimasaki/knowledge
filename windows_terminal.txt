@@ -1,0 +1,42 @@
+function ll() { dir }
+Set-Alias -Name ll -Value dir
+
+function ifconfig() { ipconfig }
+Set-Alias -Name ifconfig -Value ipconfig 
+
+function grep() { findstr }
+Set-Alias -Name grep -Value findstr
+
+function env() { dir env: }
+#NG Set-Alias -Name env -Value 'dir env:'
+
+function rm() { Remove-Item -Force -Recurse -Path }
+# Set-Alias -Name rm -Value 'Remove-Item -Force -Recurse -Path'
+
+function vim() { C:\Program Files\Vim\vim82\vim.exe }
+Set-Alias -Name vim -Value 'C:\Program Files\Vim\vim82\vim.exe'
+
+Import-Module oh-my-posh
+Set-PoshPrompt -Theme rudolfs-dark
+
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+
+# ログディレクトリのパス（C:\Users\mhosoi\OneDrive - Cisco\Desktop\work\100_Prj\700_teraterm_log）
+$logdir = "C:\Users\mhosoi\OneDrive - Cisco\Desktop\work\100_Prj\700_teraterm_log"
+# ログファイル名
+$fileName = (Get-Date).ToString("yyyyMMdd_HHmmss") + ".log"
+# ログファイルのパス
+$logfile = join-path $logdir $filename
+
+# ログディレクトリが存在する場合、ログ取得を開始
+if ( Test-Path $logdir ) {
+    Start-Transcript $logfile -append
+} else {
+    Write-Host ("No such directory : " + $logdir)
+}
+
+# PSFzfの読み込みとAlias有効化
+# Import-Module PSFzf
+# Enable-PsFzfAliases
+# ZLocationの読み込み
+Import-Module ZLocation
