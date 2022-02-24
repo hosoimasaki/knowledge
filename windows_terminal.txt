@@ -21,8 +21,8 @@ Set-PoshPrompt -Theme rudolfs-dark
 
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
-# ログディレクトリのパス（C:\Users\mhosoi\OneDrive - Cisco\Desktop\work\100_Prj\700_teraterm_log）
-$logdir = "C:\Users\mhosoi\OneDrive - Cisco\Desktop\work\100_Prj\700_teraterm_log"
+# ログディレクトリのパス（C:\Users\xxx\Desktop\work\teraterm_log）
+$logdir = "C:\Users\xxxx\teraterm_log"
 # ログファイル名
 $fileName = (Get-Date).ToString("yyyyMMdd_HHmmss") + ".log"
 # ログファイルのパス
